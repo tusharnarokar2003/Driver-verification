@@ -1,0 +1,60 @@
+I'm now refining my approach to tool selection, having refreshed on the critical instructions. My focus is on ensuring the most specific tool is chosen for each task, avoiding redundant command nesting. I have to avoid using cat, grep, or 
+ls for simple tasks. Now I'm preparing to provide instructions to the user.
+
+Here is a step-by-step guide on how to successfully run this microservice on your machine and how to test it!
+
+⚠️ Important Prerequisite Note
+Currently, you are running Python 3.13. The insightface library does not have pre-built binaries for Python 3.12+ and usually fails to install via pip on Windows unless you have Visual Studio C++ Build Tools installed. To successfully run this project, you should ideally use Python 3.10 
+or install the C++ Build Tools.
+
+🏃‍♂️ How to Run the Project
+Activate the Virtual Environment Open a terminal inside 
+the f:\internship\urban ride thynktech ad\Urban-Black\model folder and run:
+
+powershell
+# Windows PowerShell
+.\venv\Scripts\activate
+Install the Required Packages Once the environment is active 
+
+(venv)
+, run:
+
+bash
+pip install -r requirements.txt
+Download the AuraFace Model (One-Time Setup) Before starting the server, you need to download the AI model. Run:
+
+bash
+python download_model.py
+This will securely fetch the AuraFace model and save it to the models/auraface directory.
+
+Start the API Server Start the FastAPI development server by running:
+
+bash
+uvicorn main:app --host 0.0.0.0 --port 8000
+You should see a message indicating the model has initialized and the server is running on http://0.0.0.0:8000.
+
+🧪 How to Test It
+You have three easy ways to test the /verify endpoint once the server is running:
+
+Method 1: Interactive Dashboard (Easiest) FastAPI automatically generates a beautifully designed testing UI for you!
+
+Open your browser and go to: http://localhost:8000/docs.
+Click on the green POST /verify accordion.
+Click the Try it out button on the right.
+Upload any dummy driver_image and database_image from your computer using the file pickers.
+Click Execute and scroll down to see the JSON response (e.g., {"verified": true}).
+Method 2: Using the 
+
+test_api.py
+ Script I've written a small test script for you named 
+
+test_api.py
+ in the same directory.
+
+Add two test images into the folder and name them test_driver.jpg and test_database.jpg.
+In a new terminal (with the virtual environment activated), run:
+bash
+python test_api.py
+This will automatically act like your SpringBoot application, sending the images to the server and printing the verified status!
+
+Method 3: From your SpringBoot Application In the primary project, you simply configure SpringBoot to prepare a multipart/form-data request with two parts (driver_image and database_image) and POST it to http://localhost:8000/verify. It will reply with a JSON mapping containing the comparison result!

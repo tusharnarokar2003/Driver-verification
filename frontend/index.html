@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Verification Tool</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Face Verification</h1>
+            <p>Upload a database reference image, capture your selfie, and verify.</p>
+        </header>
+        
+        <div class="upload-section">
+            <div class="card">
+                <h2>1. Database Image</h2>
+                <div class="upload-box" id="upload-box">
+                    <input type="file" id="database-input" accept="image/*" hidden>
+                    <label for="database-input" class="upload-label">
+                        <span class="icon">📁</span>
+                        <span>Click to Select Reference Face</span>
+                    </label>
+                    <img id="db-preview" class="preview" hidden>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>2. Driver Selfie (Live Camera)</h2>
+                <div class="video-container">
+                    <video id="camera-feed" autoplay playsinline></video>
+                    <canvas id="camera-canvas" hidden></canvas>
+                    <img id="selfie-preview" class="preview" hidden>
+                </div>
+                <div class="camera-controls">
+                    <button id="capture-btn" class="btn primary">Capture Selfie</button>
+                    <button id="retake-btn" class="btn secondary" hidden>Retake</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-section">
+            <button id="verify-btn" class="btn verify-btn" disabled>Verify Face</button>
+        </div>
+
+        <div id="result-overlay" class="result-overlay hidden">
+            <div class="result-card" id="result-card-inner">
+                <h2 id="result-title">Verifying...</h2>
+                <p id="result-desc"></p>
+                <div class="loader" id="loader"></div>
+                <button id="close-result" class="btn secondary hidden" style="margin-top: 1rem;">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
