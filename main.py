@@ -23,7 +23,7 @@ async def startup_event():
     # Initialize model
     face_app = FaceAnalysis(
         name="auraface",
-        root="models",   # IMPORTANT
+        root=".",   # IMPORTANT: searches in ./models/auraface
         providers=["CPUExecutionProvider"]  # use CUDA if GPU available
     )
     # The models directory needs to contain models/auraface

@@ -1,0 +1,56 @@
+Driver Verification Project - File Details
+
+This document outlines the purpose and importance of each file and directory within the Driver Verification project.
+
+1. `main.py`
+- What it does: This is the core application logic and entry point for the FastAPI server.
+ It initializes the FaceAnalysis model (AuraFace), handles cross-origin requests (CORS),
+  and provides the `/verify` POST endpoint. It decodes the uploaded images, extracts face embeddings
+   using InsightFace, calculates the cosine similarity, and determines if the driver is a match based on a threshold (0.6).
+    It also serves the frontend files statically.
+- Importance: This is the most crucial file in the project. 
+It runs the actual backend verification service that compares the faces.
+
+2. `download_model.py`
+- What it does: A secure, one-time setup script that uses the Hugging Face Hub (via `snapshot_download`) to download the `fal/AuraFace-v1` AI model and saves it directly into the `models/auraface` directory.
+- Importance: Essential for setup. The `main.py` server will fail to initialize without first running this script to acquire the face recognition model weights.
+
+3. `test_api.py`
+- What it does: A Python-based test client that simulates a real-world request to the server. It attempts to load two local images (`test_driver.jpg` and `test_database.jpg`), constructs a `multipart/form-data` request, sends it to the running FastAPI server, and prints the result.
+- Importance: Highly useful for debugging and development. It allows developers to quickly test if the server is processing images correctly without needing a full frontend or external application (like SpringBoot) to send requests.
+
+4. `requirements.txt`
+- What it does: A text file that lists all the Python third-party dependencies required to run the project, such as `fastapi`, `uvicorn`, `insightface`, `huggingface_hub`, and `opencv-python-headless`.
+- Importance: Crucial for setting up the virtual environment so that `main.py` and `download_model.py` have the necessary packages to execute.
+
+5. `README.md`
+- What it does: The primary documentation file written in Markdown. It outlines what the face verification microservice does, prerequisites (like needing C++ build tools), setup instructions step-by-step, and how a main application (e.g., SpringBoot) should structure API requests.
+- Importance: Crucial for onboarding new developers and understanding the project's purpose and usage at a high level.
+
+6. `run.txt`
+- What it does: Contains an explicit, tutorial-like guide on how to setup, run, and test the project on Windows. It touches on activating the virtual environment, downloading the model, running the server, and three different ways to test it.
+- Importance: Supplemental documentation, specifically useful for troubleshooting environment issues and providing straightforward instructions for running tests.
+
+7. `frontend/` (Directory)
+- What it does: Contains the web interface files (`index.html`, `style.css`, `app.js`). These are served by `main.py` when you visit the root URL (`/`). It provides a visual UI, potentially using the user's camera to capture a driver image locally and send it to the backend for verification.
+- Importance: Important for visual demonstration and manual testing of the API in a browser setting.
+
+8. `server_output.txt`
+- What it does: A log or output dump file, storing what the server printed to the console during execution.
+- Importance: Useful for historical references of server logs or debugging past errors.
+
+9. `models/` (Directory)
+- What it does: A storage directory intended to hold machine learning models, specifically the `auraface` model downloaded by `download_model.py`.
+- Importance: Essential structure. `main.py` expects the model weights to exist within this nested path to load the face recognition algorithms into memory.
+
+10. `image/` (Directory)
+- What it does: A folder structure likely used to store sample images, test images, or temporary images used during development.
+- Importance: Useful for organizing test data (like `test_driver.jpg`).
+
+11. `venv/` (Directory)
+- What it does: The Python Virtual Environment folder. It contains the isolated Python executable and all the installed dependencies from `requirements.txt`.
+- Importance: Prevents dependency conflicts with the rest of your system. You don't need to manually edit files in here, just activate the environment to run the project.
+
+12. `.git/` (Directory)
+- What it does: The hidden folder containing the version control history of the project via Git.
+- Importance: Essential for tracking code changes, collaborating, and reverting to previous states if needed.
